@@ -69,8 +69,8 @@ jobs:
           file: Dockerfile
           context: .
           push: true
-          platforms:
-            - linux/arm64
+          platforms: |
+            linux/arm64
           tags: ghcr.io/${{ env.image_repository_name }}:${{ env.TAG_NAME }}
   
   deploy_via_ssh:
