@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: app
+    ports:
+      - "5000:80"
+    volumes:
+      - app-mydb:/app/App_Data
+    networks:
+      - mynet
+  app-migration:
+    build: .
+    restart: "no"
+    profiles:
+      - migration
+    command: --AppTasks=migrate
+    volumes:
+      - app-mydb:/app/App_Data
+  gatling:
+    build: ./gatling
+    volumes:
+      - ./gatling/conf:/opt/gatling/conf
+      - ./gatling/results:/opt/gatling/target/gatling
+      - ./gatling/src:/opt/gatling/src
+    depends_on:
+      - app
+    profiles:
+      - test
+    command: mvn gatling:test
+    networks:
+      - mynet
+
+volumes:
+  app-mydb:
+
+networks:
+  mynet:
