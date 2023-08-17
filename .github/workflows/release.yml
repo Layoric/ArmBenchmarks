@@ -35,6 +35,11 @@ jobs:
         with:
           ref: refs/tags/${{ github.event.inputs.version }}
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       # Assign environment variables used in subsequent steps
       - name: Env variable assignment
         run: echo "image_repository_name=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
@@ -58,13 +63,13 @@ jobs:
       
       # Build and push new docker image, skip for manual redeploy other than 'latest'
       - name: Build and push Docker images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         if: ${{ github.event.inputs.version == '' || github.event.inputs.version == 'latest' }}
         with:
           file: Dockerfile
           context: .
           push: true
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/${{ env.image_repository_name }}:${{ env.TAG_NAME }}
   
   deploy_via_ssh:
