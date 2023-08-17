@@ -2,6 +2,7 @@ version: "3.9"
 services:
     app:
         image: ghcr.io/${IMAGE_REPO}:${RELEASE_VERSION}
+        platform: linux/arm64
         restart: always
         ports:
             - "80"
@@ -14,6 +15,7 @@ services:
             - app-mydb:/app/App_Data
     app-migration:
         image: ghcr.io/${IMAGE_REPO}:${RELEASE_VERSION}
+        platform: linux/arm64
         restart: "no"
         container_name: ${APP_NAME}_app_migration
         profiles:
@@ -23,6 +25,7 @@ services:
             - app-mydb:/app/App_Data
     gatling:
         build: ./gatling
+        platform: linux/arm64
         volumes:
           - ./gatling/conf:/opt/gatling/conf
           - ./gatling/results:/opt/gatling/target/gatling
