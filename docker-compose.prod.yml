@@ -21,6 +21,17 @@ services:
         command: --AppTasks=migrate
         volumes:
             - app-mydb:/app/App_Data
+    gatling:
+        build: ./gatling
+        volumes:
+          - ./gatling/conf:/opt/gatling/conf
+          - ./gatling/results:/opt/gatling/target/gatling
+          - ./gatling/src:/opt/gatling/src
+        depends_on:
+          - app
+        profiles:
+          - test
+        command: mvn gatling:test
 
 networks:
   default:
