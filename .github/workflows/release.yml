@@ -125,7 +125,7 @@ jobs:
           echo "LETSENCRYPT_EMAIL=${{ secrets.LETSENCRYPT_EMAIL }}" >> .env
           echo "APP_NAME=${{ github.event.repository.name }}" >> .env
           echo "IMAGE_REPO=${{ env.image_repository_name }}" >> .env
-          echo "RELEASE_VERSION=${{ env.TAG_NAME }}" >> .env
+          echo "RELEASE_VERSION=${{ env.TAG_NAME }}-arm64v8" >> .env
 
       # Copy only the docker-compose.yml to remote server home folder
       - name: copy files to target server via scp
