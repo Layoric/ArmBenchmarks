@@ -87,7 +87,6 @@ jobs:
           tags: |
             ghcr.io/${{ env.image_repository_name }}:${{ env.TAG_NAME }}
             ghcr.io/${{ env.image_repository_name }}:${{ env.TAG_NAME }}-arm64v8
-            ${{ steps.gh-meta.outputs.tags }}-arm64v8
   
   deploy_via_ssh:
     needs: push_to_registry
