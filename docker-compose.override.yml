@@ -25,7 +25,7 @@ services:
       - app
     profiles:
       - test
-    command: ["http://app:80","500000"]
+    command: ["http://app:80","20000"]
     networks:
       - mynet
 
