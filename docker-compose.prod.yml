@@ -23,18 +23,18 @@ services:
         command: --AppTasks=migrate
         volumes:
             - app-mydb:/app/App_Data
-    gatling:
-        build: ./gatling
-        platform: linux/arm64
-        volumes:
-          - ./gatling/conf:/opt/gatling/conf
-          - ./gatling/results:/opt/gatling/target/gatling
-          - ./gatling/src:/opt/gatling/src
-        depends_on:
-          - app
-        profiles:
-          - test
-        command: mvn gatling:test
+    benchmark-client:
+      build:
+        dockerfile: ./BenchmarkClient/Dockerfile
+        context: .
+      platform: linux/arm64
+      depends_on:
+        - app
+      profiles:
+        - test
+      command: ["http://app:80"]
+      networks:
+        - mynet
 
 networks:
   default:

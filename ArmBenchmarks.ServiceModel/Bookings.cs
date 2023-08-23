@@ -51,6 +51,9 @@ public enum RoomType
 public class QueryBookings : QueryDb<Booking> 
 {
     public int? Id { get; set; }
+    
+    public RoomType? RoomType { get; set; }
+    public DateTime? BookingStartDateGreaterThan { get; set; }
 }
 
 // Uncomment below to enable DeletedBookings API to view deleted bookings:
