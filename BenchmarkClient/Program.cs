@@ -16,6 +16,7 @@ namespace BenchmarkApp
         {
             // Initialize the JsonHttpClient
             var url = args.Length > 0 ? args[0] : baseUrl;
+            var totalReqs = args.Length > 1 ? int.Parse(args[1]) : totalRequests;
             var client = new JsonHttpClient(url);
             await client.PostAsync(new Authenticate("credentials")
             {
@@ -42,7 +43,7 @@ namespace BenchmarkApp
             }
             
             // Use multiple threads to make requests
-            long iterations = totalRequests;
+            long iterations = totalReqs;
             
             async void MakeRequest(int i)
             {
